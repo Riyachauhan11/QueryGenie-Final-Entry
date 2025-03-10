@@ -1,0 +1,12 @@
+query,category,response
+"Where is my order?",ORDER,"Your order is being processed. You will receive tracking details soon."
+"What is the status of my delivery?",DELIVERY,"Your package is out for delivery and will arrive soon."
+"How can I update my shipping address?",SHIPPING_ADDRESS,"You can update your shipping address from your account settings before the order is shipped."
+"Why am I being charged a cancellation fee?",CANCELLATION_FEE,"A cancellation fee applies if the order has already been processed or shipped."
+"Can I get an invoice for my order?",INVOICE,"Your invoice has been sent to your registered email. You can also download it from your account."
+"How do I make a payment?",PAYMENT,"We accept credit/debit cards, PayPal, and other online payment methods."
+"I want a refund for my last purchase.",REFUND,"Refunds are processed within 5-7 business days after approval."
+"Where can I provide feedback?",FEEDBACK,"We appreciate your feedback! You can submit it on our website or through the mobile app."
+"How can I contact customer support?",CONTACT,"You can contact our support team via chat, email, or phone."
+"I can't log into my account.",ACCOUNT,"Please reset your password or contact support for assistance."
+"How do I unsubscribe from the newsletter?",NEWSLETTER,"Click the unsubscribe link at the bottom of any newsletter email."

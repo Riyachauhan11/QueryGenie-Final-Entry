@@ -1,0 +1,13 @@
+{
+    "ORDER": "Your order is being processed. You will receive tracking details soon.",
+    "DELIVERY": "Your package is out for delivery and will arrive soon.",
+    "SHIPPING_ADDRESS": "You can update your shipping address from your account settings before the order is shipped.",
+    "CANCELLATION_FEE": "A cancellation fee applies if the order has already been processed or shipped.",
+    "INVOICE": "Your invoice has been sent to your registered email. You can also download it from your account.",
+    "PAYMENT": "We accept credit/debit cards, PayPal, and other online payment methods.",
+    "REFUND": "Refunds are processed within 5-7 business days after approval.",
+    "FEEDBACK": "We appreciate your feedback! You can submit it on our website or through the mobile app.",
+    "CONTACT": "You can contact our support team via chat, email, or phone.",
+    "ACCOUNT": "Please reset your password or contact support for assistance.",
+    "NEWSLETTER": "Click the unsubscribe link at the bottom of any newsletter email."
+}
