@@ -20,20 +20,25 @@ llm = ChatGroq(
     model_name="llama-3.3-70b-versatile"
 )
 def generate_response(category, email_text):
-    """Generates a response using retrieved policy data first, then Llama if needed."""
+    """Generates a structured response using retrieved policy data first, then Llama if needed."""
     try:
         retrieved_policy = retrieve_policy(email_text)
 
         if retrieved_policy != "NO_MATCH":
             prompt = (
                 f"You are an AI assistant for an online shopping platform.\n\n"
-                f"Use the following company policy to generate a response:\n\n"
-                f"{retrieved_policy}\n\nUser Query: {email_text}"
+                f"Use the following company policy to generate a structured response.\n"
+                f"Do not ask follow-up questions. Ensure the response is informative.\n\n"
+                f"Policy:\n{retrieved_policy}\n\n"
+                f"User Query: {email_text}\n\n"
+                f"Provide a clear and well-structured response."
             )
         else:
             prompt = (
                 f"You are an AI assistant for an online shopping platform.\n\n"
-                f"Category: {category}\nEmail: {email_text}\nGenerate a response."
+                f"Category: {category}\nEmail: {email_text}\n\n"
+                f"Provide a structured response relevant to this category.\n"
+                f"Ensure the response is detailed but concise. Do not ask follow-up questions."
             )
 
         response = llm.invoke(prompt)
@@ -43,6 +48,7 @@ def generate_response(category, email_text):
         print(f"Llama Model Error: {e}")
 
     return responses.get(category, "I'm sorry, I don't understand your request.")
+
 
 def generate_chat_response(chat_history, user_message):
     """Generates a short, conversational response, prioritizing policy-based answers."""
