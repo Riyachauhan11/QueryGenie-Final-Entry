@@ -4,45 +4,48 @@ QueryGenie is an AI-powered customer support automation system that categorizes 
 
 > 📌 **Tech Stack Used**  
 > - **Programming Language:** Python  
-> - **Machine Learning & NLP:** Scikit-learn, NLTK, Transformers (Hugging Face)  
-> - **Data Handling:** Pandas, Pickle  
+> - **Machine Learning & NLP:** Scikit-learn, Pandas, NumPy  
+> - **Vector Database & Retrieval:** ChromaDB, Sentence-Transformers
 > - **Frontend:** Streamlit  
-> - **Environment & Config Management:** Dotenv  
-
-**Note:** This project is a **prototype** designed to fulfill the high-level functionality of the final product. It is will undergo significant changes in future iterations.
+> - **Other Dependencies:** Dotenv, PyMuPDF, LangChain-Groq
 
 ## 📁 Project Structure
 ```
 📂 QueryGenie
- ├── 📂 data  # Contains datasets for classification & sentiment analysis
- │   ├── emails.csv  # Customer support dataset 
- │   ├── sentiment_data.csv  # sentiment dataset 
- │   ├── responses.json  # Predefined fallback responses for LLM failures
+ ├── 📂 data  # Contains datasets and policy documents
+ │   ├── 📂 chroma_db  # Persistent vector database for policy retrieval
+ │   ├── 📂 company_policies  # Stores company policy in PDFs
+ │   ├── emails.csv  # Customer support dataset
+ │   ├── sentiment_data.csv  # Sentiment dataset
+ │   ├── responses.json  # Fallback responses for LLM failures
  │
- ├── 📂 models  # Pre-trained models for classification & sentiment analysis
+ ├── 📂 models  # Pre-trained models and vectorizers
  │   ├── email_classifier.pkl
  │   ├── sentiment_analyzer.pkl
  │   ├── vectorizer_email.pkl
  │   ├── vectorizer_sentiment.pkl
  │
  ├── 📂 src  # Core system logic
- │   ├── 📂 training  # Scripts for training ML models
- │   │   ├── train_classifier.py
- │   │   ├── train_sentiment.py
- │   ├── sentiment_analysis.py  # Performs sentiment analysis on queries
+ │   ├── 📂 training  # ML training scripts
+ │   │   ├── train_classifier.py  
+ │   │   ├── train_sentiment.py  
+ │   ├── sentiment_analysis.py  # Analyzes sentiment of incoming emails
  │   ├── classification.py  # Categorizes emails into predefined types
+ │   ├── pdf_processor.py  # Extracts text from policy PDFs
+ │   ├── policy_retriever.py  # Retrieves policies using ChromaDB
  │   ├── response_generator.py  # Generates AI-based responses
- │   ├── main.py  # Main execution script (Streamlit frontend)
+ │   ├── main.py  # Streamlit frontend for user interaction
  │
  ├── 📂 tests  # Unit test scripts
- │   ├── test_classification.py
- │   ├── test_sentiment.py
- │   ├── test_response.py
+ │   ├── test_classification.py  
+ │   ├── test_sentiment.py  
+ │   ├── test_response.py 
  │
- ├── .env  # Stores API keys (Groq API Key required)
+ ├── .env  # Environment variables (API keys, config)
  ├── .gitignore  # Specifies ignored files
  ├── README.md  # Project documentation
  ├── requirements.txt  # Lists required dependencies
+
 ```
 
 # 🛠️ Setup Instructions  
@@ -100,11 +103,11 @@ Ensure the `data` folder contains the necessary datasets for **email classificat
 
 🔹 **Customer Query Classification Dataset:**  
 Used to categorize customer queries into predefined types.  
-📌 [Download from Kaggle](https://www.kaggle.com/datasets/scodepy/customer-support-intent-dataset)  
+📌 [Download from Kaggle](https://www.kaggle.com/datasets/thedevastator/tweeteval-a-multi-task-classification-benchmark?select=sentiment_train.csv)  
 
 🔹 **Sentiment Analysis Dataset:**  
 Used to analyze if a customer's email sentiment is positive or negative.  
-📌 [Download from Kaggle](https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)  
+📌 [Download from Github](https://github.com/bitext/customer-support-llm-chatbot-training-dataset/tree/main)  
 
 💾 **Steps:**  
 1. Download both datasets as **CSV files**.  
@@ -141,8 +144,23 @@ python test_response.py        # Test response generation
 If all tests pass, proceed to the next step.  
 
 ---
+## 7️⃣ Process Policy Documents and Build ChromaDB
 
-## 7️⃣ Running the Project  
+Since policy retrieval relies on ChromaDB, you need to process policy PDFs before running retrieval tasks:
+```bash
+cd src
+python pdf_processor.py
+```
+This will create the chroma_db/ folder inside data/, storing vector embeddings for policy retrieval.
+
+After processing, test policy retrieval:
+```bash
+policy_retriever.py
+```
+If results are returned successfully, move to the next step.
+
+---
+## 8️⃣ Running the Project  
 
 The frontend is built using **Streamlit**. To launch the app:  
 
@@ -150,10 +168,15 @@ The frontend is built using **Streamlit**. To launch the app:
 cd src
 streamlit run main.py
 ```
+If any issues are faced while running streamlit use the following cmd:
+```bash
+cd src
+streamlit run main.py --server.fileWatcherType=none
+```
 
 This will start the application and open the **QueryGenie UI** in your browser, where you can enter customer queries and receive AI-generated responses. How the UI looks like:
-![image](https://github.com/user-attachments/assets/8ebb3c3b-ac34-4fc5-97a4-0b4c478cb84c)
-  
+![image](https://github.com/user-attachments/assets/4393746e-6269-4a17-84a9-258e279054dc)
+
 ---
 
 ## How QueryGenie Works?  
@@ -180,9 +203,9 @@ This will start the application and open the **QueryGenie UI** in your browser, 
 
 ## 🔹 Final Notes  
 
-- This project is a **prototype** and not the final version.  
-- The datasets used for email classification and sentiment analysis are **not extensive or broad enough** to cover every possible customer query. A more **comprehensive dataset** would be needed for real-world deployment.  
-- The system is specifically designed for handling **customer support queries** and may **not work** for other domains.  
-- Since the datasets are limited, the model **may not always produce accurate results** and might misclassify some queries.  
-- For response generation, a **general LLM** has been used. However, in a real-world scenario, an **LLM trained on company policies and guidelines** would be used to ensure **accurate and policy-compliant** responses.
+- QueryGenie is an AI-powered prototype designed for automating customer support interactions.
+- The current email classification and sentiment analysis models use publicly available datasets, which may not cover all possible customer queries. Expanding the dataset would improve accuracy.
+- The system is tailored for handling customer support queries and may not generalize well to other domains without fine-tuning.
+- The LLM generates responses dynamically, but a fallback mechanism using predefined responses ensures reliability when AI-generated replies are unavailable.
+- For real-world deployment, a custom-trained LLM fine-tuned on company policies and previous customer interactions would ensure greater accuracy and compliance with company guidelines.
 
