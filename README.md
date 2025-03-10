@@ -1,4 +1,4 @@
-# QueryGenie - 2025 Girl Hackathon
+# QueryGenie Final Entry - 2025 Girl Hackathon
 
 QueryGenie is an AI-powered customer support automation system that categorizes incoming queries and emails, analyzes sentiment, and generates AI-driven responses based on confidence scores and the urgency or intensity of emotions detected in customer requests.
 
